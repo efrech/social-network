@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-const dateFormat = require('../utils/dateFormat');
-const { timeStamp } = require('console');
+// const dateFormat = require('../utils/dateFormat');
 
 // Schema to create Thought model
 const thoughtSchema = new Schema(
@@ -15,10 +14,9 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now,
-            unique: true,
-            get: timeStamp => dateFormat(timeStamp)
+            // get: timeStamp => dateFormat(timeStamp)
         },
-        userNAme: {
+        username: {
             type: String,
             required: true
         },
@@ -27,9 +25,10 @@ const thoughtSchema = new Schema(
     {
         // Virtuals to be included with our response, overriding the default behavior
         toJSON: {
+            virtuals: true,
             getters: true,
           },
-          id: false,
+          id: false
     }
 );
 
@@ -39,6 +38,6 @@ thoughtSchema.virtual('reactionCount').get(function() {
 });
 
 // Initialize our User model
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;
